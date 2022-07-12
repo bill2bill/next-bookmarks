@@ -1,16 +1,45 @@
 import Head from 'next/head'
 import 'tailwindcss/tailwind.css'
+import { useEffect, useState } from 'react';
+import Bookmarks from '../components/bookmarks'
+import Card from '../components/Card'
+import Handle from '../components/Handle'
+import Insert from '../components/Insert'
+import BookmarkContext from '../lib/context'
+import { checkCache } from '../lib/cache';
 
 export default function Home() {
-  const data = [
-    // "https://www.bbc.com?fqwfwaaddwwwwwwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "https://www.bbc.com",
-    "https://www.bbc.com",
-    "https://www.bbc.com?fqwfwa",
-    "https://www.bbc.com",
-    // "https://www.bbc.com?fqwfwaadwdawdawdawdafawfawfawfwafawfawfaw",
-  ]
-  const number = 1
+  const [cacheReady, setCacheReady] = useState(false);
+  const [bookmarks, setBookmarks] = useState(["fawfawfa","fawfawfa","fawfawfa"]);
+
+  useEffect(() => setCacheReady(checkCache(window)), [])
+
+  const onClear = () => setBookmarks([])
+
+  const errorPage = <>
+    <h1 className="text-xl md:text-6xl text-black uppercase m-8">Cache unavailable :(</h1>
+  </>
+
+  const bookmarkPage = <>
+    <BookmarkContext.Provider value={{ bookmarks, setBookmarks }}>
+        <h1 className="text-4xl md:text-6xl text-black uppercase m-8">B O O K M A R K S</h1>
+        <Card>
+            <Bookmarks/>
+        </Card>
+        <Card>
+            <Insert/>
+        </Card>
+        <Card>
+          <div className="mb-3">
+            Clear all bookmarks
+          </div>
+          <button className="bg-red-200 rounded p-2 hover:bg-red-400 h-min mb-1" onClick={onClear}>
+            clear
+          </button>
+        </Card>
+        <Handle/>
+    </BookmarkContext.Provider>
+  </>
 
   return (
     <div>
@@ -21,59 +50,8 @@ export default function Home() {
       </Head>
 
       <main>
-        <div className="container mx-auto flex justify-center items-center flex-col">
-          <h1 className="text-4xl md:text-6xl text-black uppercase m-8">B O O K M A R K S</h1>
-          <div className="bg-white rounded px-6 py-2 mb-6">
-              {data.map(url => <>
-                <div className="grid grid-cols-6 gap-4 bg-gray-200 rounded p-2 m-3">
-                  <div className="col-span-5 ...">
-                    <div className="bg-white rounded p-2">
-                      {url}
-                    </div>
-                  </div>
-                  <div className="col-span-1 ...">
-                    <button className="bg-red-200 rounded p-2 hover:bg-red-400 h-min">
-                      x
-                    </button>
-                  </div>
-                </div>
-              </>)}
-              <div className="grid grid-cols-3 gap-4 border-t-2 border-t-gray-200">
-                <button className="col-span-1 m-1 rounded p-1/2 hover:bg-gray-200">
-                  {"<"}
-                </button>
-                <div className="col-span-1 p-2">
-                  {number}
-                </div>
-                <button className="col-span-1 m-1 rounded p-1/2 hover:bg-gray-200">
-                  {">"}
-                </button>
-              </div>
-          </div>
-          <div className="bg-white rounded px-6 py-2 mb-6">
-            <div className="mb-3">
-              Insert a new bookmark
-            </div>
-            <div className="grid grid-cols-6 gap-4 bg-gray-200 p-2 mb-2 rounded">
-              <div className="col-span-5 ...">
-                <input className="bg-white rounded p-1" />
-              </div>
-              <div className="col-span-1 ...">
-                <button className="bg-green-200 rounded p-1 hover:bg-green-400">
-                  +
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded px-6 py-2 mb-6">
-            <div className="mb-3">
-              Clear all bookmarks
-            </div>
-            <button className="bg-red-200 rounded p-2 hover:bg-red-400 h-min mb-1">
-              clear
-            </button>
-          </div>
-          <h1 className="text-1xl text-gray-100 uppercase m-8 border-t-2 border-t-gray-100">William Fussey - 2022</h1>
+        <div className="container mx-auto flex justify-center items-center flex-col text-center">
+          {cacheReady ? bookmarkPage : errorPage}
         </div>
       </main>
     </div>
