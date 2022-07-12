@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import 'tailwindcss/tailwind.css'
 import { useEffect, useState } from 'react';
-import Bookmarks from '../components/bookmarks'
+import Bookmarks from '../components/Bookmarks'
 import Card from '../components/Card'
 import Handle from '../components/Handle'
 import Insert from '../components/Insert'

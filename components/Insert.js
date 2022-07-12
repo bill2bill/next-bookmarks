@@ -1,14 +1,26 @@
 import { useContext, useState } from "react";
 import BookmarkContext from '../lib/context'
 
-export default function Insert(props) {
+export default function Insert() {
     const {bookmarks, setBookmarks} = useContext(BookmarkContext);  
     const [bookmark, setBookmark] = useState("")
     const [error, setError] = useState(false)
+    const errors = {
+        url: "You must enter a valid URL",
+        empty: "You must enter a URL"
+    }
+    const re = new RegExp(process.env.URL_REGEX || ".+[\.].{2,3}");
 
     const isError = (value) => {
-        setError(!value)
-        return !value
+        if (!value) {
+            setError(errors.empty)
+            return true;
+        } else if (!re.test(value)) {
+            setError(errors.url)
+            return true;  
+        }
+        setError("")
+        return false
     }   
 
     const onInput = (e) => {
@@ -38,6 +50,6 @@ export default function Insert(props) {
                 </button>
             </div>
         </div>
-        {error ? <div className="mb-3 text-red-400 text-sm">You must enter a URL</div> : null}
+        {error ? <div className="mb-3 text-red-400 text-sm">{error}</div> : null}
     </>
   }
