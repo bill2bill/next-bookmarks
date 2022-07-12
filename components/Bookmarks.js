@@ -5,7 +5,7 @@ import Pagination from "./Pagination"
 export default function Bookmarks() {
     const {bookmarks, setBookmarks} = useContext(BookmarkContext);  
     const [number, setNumber] = useState(1)
-    const size = 5
+    const size = process.env.PAGE_SIZE || 5
     const empty = "                   "
 
     const getBookmarks = () => {
@@ -44,6 +44,6 @@ export default function Bookmarks() {
                 </div>
             </>
         )}
-        <Pagination number={number} onBack={onBack} onNext={onNext} />
+        <Pagination size={Math.ceil(bookmarks.length / size)} number={number} onBack={onBack} onNext={onNext} />
     </>
   }
