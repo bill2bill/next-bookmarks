@@ -6,6 +6,7 @@
 - Speed of reading from cache is dependent on number of cached bookmarks
 - Regex for URL validation only check for "string dot string", a user is able to easily insert an invalid URL. However for user experience I went for a soft check
 - Vercel free tier cannot handle large bandwidths
+- Users must delete and add to edit an old bookmark
 
 ## Getting Started
 
