@@ -44,6 +44,6 @@ export default function Bookmarks() {
                 </div>
             </>
         )}
-        <Pagination size={Math.ceil(bookmarks.length / size)} number={number} onBack={onBack} onNext={onNext} />
+        <Pagination size={Math.ceil(bookmarks.length || 1 / size)} number={number} onBack={onBack} onNext={onNext} />
     </>
   }
