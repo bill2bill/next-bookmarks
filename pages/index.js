@@ -6,15 +6,40 @@ import Card from '../components/Card'
 import Handle from '../components/Handle'
 import Insert from '../components/Insert'
 import BookmarkContext from '../lib/context'
-import { checkCache } from '../lib/cache';
+import { cacheGet, cacheUpdate, checkCache } from '../lib/cache';
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const [cacheReady, setCacheReady] = useState(false);
-  const [bookmarks, setBookmarks] = useState(["fawfawfa","fawfawfa","fawfawfa"]);
+  const [bookmarks, setBookmarks] = useState([]);
 
-  useEffect(() => setCacheReady(checkCache(window)), [])
+  useEffect(() => {
+    const isCache = checkCache(window)
+    setCacheReady(isCache)
+    if (isCache) {
+      setLoading(true)
+      cacheGet()
+        .then(bmks => {
+          setBookmarks(bmks || [])
+        })
+        .finally(() => setLoading(false))
+    } else {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!loading  && checkCache(window)) {
+      cacheUpdate(bookmarks)
+      .then(() => {})
+    }
+  }, [loading, bookmarks])
 
   const onClear = () => setBookmarks([])
+
+  const loadingPage = <>
+    <h1 className="text-xl md:text-6xl text-black uppercase m-8">Loading...</h1>
+  </>
 
   const errorPage = <>
     <h1 className="text-xl md:text-6xl text-black uppercase m-8">Cache unavailable :(</h1>
@@ -41,6 +66,15 @@ export default function Home() {
     </BookmarkContext.Provider>
   </>
 
+  let page
+  if (loading) {
+    page = loadingPage
+  } else if (cacheReady) {
+    page = bookmarkPage
+  } else {
+    page = errorPage
+  }
+
   return (
     <div>
       <Head>
@@ -51,7 +85,7 @@ export default function Home() {
 
       <main>
         <div className="container mx-auto flex justify-center items-center flex-col text-center">
-          {cacheReady ? bookmarkPage : errorPage}
+          {page}
         </div>
       </main>
     </div>
