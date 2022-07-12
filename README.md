@@ -1,6 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## TDD / Overview
+
+![alt text](./next-bookmarks.jpg)
+
+### Limitations
+- Speed of reading from cache is dependent on number of cached bookmarks
+- Regex for URL validation only check for "string dot string", a user is able to easily insert an invalid URL. However for user experience I went for a soft check
+- Vercel free tier cannot handle large bandwidths
 
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 

@@ -32,7 +32,7 @@ export default function Bookmarks() {
         {getBookmarks().map(({key, url, isEmpty}) => <>
                 <div className="grid grid-cols-6 gap-4 bg-gray-200 rounded p-2 m-3">
                     <div className="col-span-5 ...">
-                        <div className="bg-white rounded p-2">
+                        <div className="bg-white break-all rounded p-2">
                             {url}
                         </div>
                     </div>
