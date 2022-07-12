@@ -21,59 +21,59 @@ export default function Home() {
       </Head>
 
       <main>
-        <div class="container mx-auto flex justify-center items-center flex-col">
-          <h1 class="text-4xl md:text-6xl text-black uppercase m-8">B O O K M A R K S</h1>
-          <div class="bg-white rounded px-6 py-2 mb-6">
+        <div className="container mx-auto flex justify-center items-center flex-col">
+          <h1 className="text-4xl md:text-6xl text-black uppercase m-8">B O O K M A R K S</h1>
+          <div className="bg-white rounded px-6 py-2 mb-6">
               {data.map(url => <>
-                <div class="grid grid-cols-6 gap-4 bg-gray-200 rounded p-2 m-3">
-                  <div class="col-span-5 ...">
-                    <div class="bg-white rounded p-2">
+                <div className="grid grid-cols-6 gap-4 bg-gray-200 rounded p-2 m-3">
+                  <div className="col-span-5 ...">
+                    <div className="bg-white rounded p-2">
                       {url}
                     </div>
                   </div>
-                  <div class="col-span-1 ...">
-                    <button class="bg-red-200 rounded p-2 hover:bg-red-400 h-min">
+                  <div className="col-span-1 ...">
+                    <button className="bg-red-200 rounded p-2 hover:bg-red-400 h-min">
                       x
                     </button>
                   </div>
                 </div>
               </>)}
-              <div class="grid grid-cols-3 gap-4 border-t-2 border-t-gray-200">
-                <button class="col-span-1 m-1 rounded p-1/2 hover:bg-gray-200">
+              <div className="grid grid-cols-3 gap-4 border-t-2 border-t-gray-200">
+                <button className="col-span-1 m-1 rounded p-1/2 hover:bg-gray-200">
                   {"<"}
                 </button>
-                <div class="col-span-1 p-2">
+                <div className="col-span-1 p-2">
                   {number}
                 </div>
-                <button class="col-span-1 m-1 rounded p-1/2 hover:bg-gray-200">
+                <button className="col-span-1 m-1 rounded p-1/2 hover:bg-gray-200">
                   {">"}
                 </button>
               </div>
           </div>
-          <div class="bg-white rounded px-6 py-2 mb-6">
-            <div class="mb-3">
+          <div className="bg-white rounded px-6 py-2 mb-6">
+            <div className="mb-3">
               Insert a new bookmark
             </div>
-            <div class="grid grid-cols-6 gap-4 bg-gray-200 p-2 mb-2 rounded">
-              <div class="col-span-5 ...">
-                <input class="bg-white rounded p-1" />
+            <div className="grid grid-cols-6 gap-4 bg-gray-200 p-2 mb-2 rounded">
+              <div className="col-span-5 ...">
+                <input className="bg-white rounded p-1" />
               </div>
-              <div class="col-span-1 ...">
-                <button class="bg-green-200 rounded p-1 hover:bg-green-400">
+              <div className="col-span-1 ...">
+                <button className="bg-green-200 rounded p-1 hover:bg-green-400">
                   +
                 </button>
               </div>
             </div>
           </div>
-          <div class="bg-white rounded px-6 py-2 mb-6">
-            <div class="mb-3">
+          <div className="bg-white rounded px-6 py-2 mb-6">
+            <div className="mb-3">
               Clear all bookmarks
             </div>
-            <button class="bg-red-200 rounded p-2 hover:bg-red-400 h-min mb-1">
+            <button className="bg-red-200 rounded p-2 hover:bg-red-400 h-min mb-1">
               clear
             </button>
           </div>
-          <h1 class="text-1xl text-gray-100 uppercase m-8 border-t-2 border-t-gray-100">William Fussey - 2022</h1>
+          <h1 className="text-1xl text-gray-100 uppercase m-8 border-t-2 border-t-gray-100">William Fussey - 2022</h1>
         </div>
       </main>
     </div>
