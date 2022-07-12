@@ -8,8 +8,10 @@ export default function Bookmarks() {
     const size = process.env.PAGE_SIZE || 5
     const empty = "                   "
 
+    const getSlice = () => bookmarks.slice((number - 1) * size, number * size)
+
     const getBookmarks = () => {
-        const slice = bookmarks.slice((number - 1) * size, number * size)
+        const slice = getSlice()
         const diff = size - slice.length
         return [...slice, ...[...Array(diff).keys()].map(_ => empty)]
             .map((url, idx) => {
@@ -21,6 +23,9 @@ export default function Bookmarks() {
 
     const onDelete = (key) => () => {
         delete bookmarks[key]
+        if (bookmarks.length > 0 && (bookmarks.length - 1) % size == 0) {
+            onBack()
+        }
         setBookmarks(bookmarks.filter(bm => bm))
     }
 
@@ -32,9 +37,11 @@ export default function Bookmarks() {
         {getBookmarks().map(({key, url, isEmpty}) => <>
                 <div className="grid grid-cols-6 gap-4 bg-gray-200 rounded p-2 m-3">
                     <div className="col-span-5 ...">
-                        <div className="bg-white break-all rounded p-2">
-                            {url}
-                        </div>
+                        <a href={url.includes("http") || url.includes("https") ? url : `https://${url}`}>
+                            <div className="bg-white break-all rounded p-2">
+                                {url}
+                            </div>
+                        </a>
                     </div>
                     <div className="col-span-1 ...">
                         {isEmpty ? <button className="bg-red-200 rounded p-2 hover:bg-red-400 h-min" onClick={onDelete(key)} >
@@ -44,6 +51,6 @@ export default function Bookmarks() {
                 </div>
             </>
         )}
-        <Pagination size={Math.ceil(bookmarks.length > 0 ? bookmarks.length : 1 / size)} number={number} onBack={onBack} onNext={onNext} />
+        <Pagination size={Math.ceil((bookmarks.length > 0 ? bookmarks.length : 1) / size)} number={number} onBack={onBack} onNext={onNext} />
     </>
   }
